@@ -54,5 +54,13 @@
   "peerDependencies": {
     "zod": ">=3.0.0",
     "react": ">=16.8.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Coderkube-App/form-ready.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Coderkube-App/form-ready/issues"
+  },
+  "homepage": "https://github.com/Coderkube-App/form-ready#readme"
 }
