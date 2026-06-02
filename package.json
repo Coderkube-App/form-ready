@@ -1,6 +1,6 @@
 {
   "name": "form-ready",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Universal form validation and handling for React, Next.js, Vite, and vanilla JS.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
