@@ -1,0 +1,421 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 560" width="940" height="560">
+  <defs>
+    <!-- Fonts -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap');
+
+      /* General Styles */
+      .bg { fill: #050508; }
+      .font-mono { font-family: 'Fira Code', 'Consolas', monospace; font-size: 13px; }
+      .font-sans { font-family: 'Inter', sans-serif; }
+
+      /* Window Shadows &amp; Glass Styles */
+      .glow-indigo { fill: url(#indigo-glow-grad); }
+      .glow-amber { fill: url(#amber-glow-grad); }
+      .glass-terminal { fill: rgba(13, 17, 23, 0.85); stroke: rgba(255, 255, 255, 0.08); stroke-width: 1.5; filter: url(#drop-shadow-window); }
+      .glass-hud { fill: rgba(13, 10, 24, 0.94); stroke: rgba(245, 158, 11, 0.35); stroke-width: 1.5; filter: url(#drop-shadow-hud); }
+
+      /* Terminal Styles */
+      .titlebar-bg { fill: #161b22; }
+      .dot-red { fill: #ff5f56; }
+      .dot-yellow { fill: #ffbd2e; }
+      .dot-green { fill: #27c93f; }
+      .window-title { fill: #8b949e; font-size: 11px; font-weight: 500; }
+      .prompt { fill: #f59e0b; font-weight: 700; }
+      .cmd-text { fill: #c9d1d9; }
+      .ansi-green { fill: #57ab5a; }
+      .ansi-green-bold { fill: #57ab5a; font-weight: 700; }
+      .ansi-blue { fill: #58a6ff; }
+      .ansi-cyan { fill: #39c5cf; }
+      .ansi-gray { fill: #8b949e; }
+      .ansi-dim { fill: #484f58; }
+      .ansi-white-bold { fill: #f0f6fc; font-weight: 700; }
+
+      /* Terminal Cursor blinking */
+      .cursor { fill: #f59e0b; }
+      @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+      .cursor-blink { animation: blink 1s step-end infinite; }
+
+      /* Typing Clip Animations */
+      @keyframes clipCmd1 {
+        0%, 4.17% { width: 0; }
+        12.5%, 100% { width: 220px; }
+      }
+      .clip-cmd1 { animation: clipCmd1 12s linear infinite; }
+
+      @keyframes clipCmd2 {
+        0%, 29.17% { width: 0; }
+        35.0%, 100% { width: 120px; }
+      }
+      .clip-cmd2 { animation: clipCmd2 12s linear infinite; }
+
+      /* Typing Cursor movements */
+      @keyframes cursor1Move {
+        0%, 4.17% { transform: translateX(0); opacity: 1; }
+        12.5% { transform: translateX(180px); opacity: 1; }
+        14.0%, 100% { transform: translateX(180px); opacity: 0; }
+      }
+      .cursor-1 { transform-origin: 40px 20px; animation: cursor1Move 12s linear infinite, blink 1s step-end infinite; }
+
+      @keyframes cursor2Move {
+        0%, 29.17% { transform: translateX(0); opacity: 0; }
+        29.18% { transform: translateX(0); opacity: 1; }
+        35.0% { transform: translateX(95px); opacity: 1; }
+        37.0%, 100% { transform: translateX(95px); opacity: 0; }
+      }
+      .cursor-2 { transform-origin: 40px 128px; animation: cursor2Move 12s linear infinite, blink 1s step-end infinite; }
+
+      /* Sequential Visibility Timelines */
+      @keyframes showSpinner { 0%, 14.9% { opacity: 0; } 15.0%, 24.9% { opacity: 1; } 25.0%, 100% { opacity: 0; } }
+      .spinner-container { animation: showSpinner 12s step-end infinite; }
+
+      @keyframes showAt25pct { 0%, 24.9% { opacity: 0; } 25.0%, 100% { opacity: 1; } }
+      .log-success { animation: showAt25pct 12s step-end infinite; }
+
+      @keyframes showAt29pct { 0%, 29.16% { opacity: 0; } 29.17%, 100% { opacity: 1; } }
+      .prompt-2 { animation: showAt29pct 12s step-end infinite; }
+
+      @keyframes showAt40pct { 0%, 39.9% { opacity: 0; } 40.0%, 100% { opacity: 1; } }
+      .log-metro { animation: showAt40pct 12s step-end infinite; }
+
+      @keyframes showAt41pct { 0%, 41.66% { opacity: 0; } 41.67%, 100% { opacity: 1; } }
+      .log-registered { animation: showAt41pct 12s step-end infinite; }
+
+      @keyframes showAt48pct { 0%, 48.32% { opacity: 0; } 48.33%, 100% { opacity: 1; } }
+      .log-active { animation: showAt48pct 12s step-end infinite; }
+
+      @keyframes showAt54pct { 0%, 54.16% { opacity: 0; } 54.17%, 100% { opacity: 1; } }
+      .log-will-show { animation: showAt54pct 12s step-end infinite; }
+
+      @keyframes showAt70pct { 0%, 70.82% { opacity: 0; } 70.83%, 100% { opacity: 1; } }
+      .log-will-success { animation: showAt70pct 12s step-end infinite; }
+
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+      .spin-icon { animation: spin 0.8s linear infinite; transform-origin: 26px 50px; }
+
+      /* ════════════ Browser Mockup Input Animations ════════════ */
+      @keyframes showNameText { 0%, 34.9% { opacity: 0; } 35.0%, 100% { opacity: 1; } }
+      .name-typed-text { animation: showNameText 12s step-end infinite; }
+
+      @keyframes hidePlaceholder { 0%, 34.9% { opacity: 1; } 35.0%, 100% { opacity: 0; } }
+      .name-placeholder { animation: hidePlaceholder 12s step-end infinite; }
+
+      @keyframes showEmailPhase1 {
+        0%, 48.32% { opacity: 0; }
+        48.33%, 63.32% { opacity: 1; }
+        63.33%, 100% { opacity: 0; }
+      }
+      .email-phase1-text { animation: showEmailPhase1 12s step-end infinite; }
+
+      @keyframes showEmailPhase2 {
+        0%, 63.32% { opacity: 0; }
+        63.33%, 100% { opacity: 1; }
+      }
+      .email-phase2-text { animation: showEmailPhase2 12s step-end infinite; }
+
+      @keyframes hideEmailPlaceholder { 0%, 48.32% { opacity: 1; } 48.33%, 100% { opacity: 0; } }
+      .email-placeholder { animation: hideEmailPlaceholder 12s step-end infinite; }
+
+      @keyframes showErrorBubble {
+        0%, 51.66% { opacity: 0; transform: translateY(-5px); }
+        51.67%, 68.32% { opacity: 1; transform: translateY(0); }
+        68.33%, 100% { opacity: 0; transform: translateY(-5px); }
+      }
+      .error-bubble { animation: showErrorBubble 12s ease-in-out infinite; }
+
+      @keyframes btnDisabled {
+        0%, 68.32% { opacity: 1; }
+        68.33%, 87.49% { opacity: 0; }
+        87.5%, 100% { opacity: 1; }
+      }
+      @keyframes btnEnabled {
+        0%, 68.32% { opacity: 0; }
+        68.33%, 87.49% { opacity: 1; }
+        87.5%, 100% { opacity: 0; }
+      }
+      .btn-submit-disabled { animation: btnDisabled 12s step-end infinite; }
+      .btn-submit-enabled { animation: btnEnabled 12s step-end infinite; }
+
+      /* Touch Taps rings */
+      @keyframes pulseRing1 {
+        0%, 31.66% { transform: scale(0); opacity: 0; }
+        33.33% { transform: scale(1); opacity: 0.8; }
+        35.0% { transform: scale(2.2); opacity: 0; }
+        35.01%, 100% { transform: scale(0); opacity: 0; }
+      }
+      .pulse-ring-1 { transform-origin: 640px 218px; animation: pulseRing1 12s ease-out infinite; }
+
+      @keyframes pulseRing2 {
+        0%, 45.0% { transform: scale(0); opacity: 0; }
+        46.67% { transform: scale(1); opacity: 0.8; }
+        48.33% { transform: scale(2.2); opacity: 0; }
+        48.34%, 100% { transform: scale(0); opacity: 0; }
+      }
+      .pulse-ring-2 { transform-origin: 640px 280px; animation: pulseRing2 12s ease-out infinite; }
+
+      @keyframes pulseRing3 {
+        0%, 75.0% { transform: scale(0); opacity: 0; }
+        76.67% { transform: scale(1); opacity: 0.8; }
+        78.33% { transform: scale(2.2); opacity: 0; }
+        78.34%, 100% { transform: scale(0); opacity: 0; }
+      }
+      .pulse-ring-3 { transform-origin: 720px 391px; animation: pulseRing3 12s ease-out infinite; }
+
+      @keyframes showToast {
+        0%, 78.32% { opacity: 0; transform: translateY(-20px); }
+        79.5%, 86.0% { opacity: 1; transform: translateY(0); }
+        87.5%, 100% { opacity: 0; transform: translateY(-20px); }
+      }
+      .success-toast { animation: showToast 12s ease-out infinite; }
+
+      /* HUD State toggles */
+      @keyframes showHudPhaseA { 0%, 48.32% { opacity: 1; } 48.33%, 100% { opacity: 0; } }
+      @keyframes showHudPhaseB { 0%, 48.32% { opacity: 0; } 48.33%, 68.32% { opacity: 1; } 68.33%, 100% { opacity: 0; } }
+      @keyframes showHudPhaseC { 0%, 68.32% { opacity: 0; } 68.33%, 100% { opacity: 1; } }
+      .hud-phase-a { animation: showHudPhaseA 12s step-end infinite; }
+      .hud-phase-b { animation: showHudPhaseB 12s step-end infinite; }
+      .hud-phase-c { animation: showHudPhaseC 12s step-end infinite; }
+
+      /* Pulsing LED in HUD */
+      @keyframes pulseBlue {
+        0%, 100% { fill: #3b82f6; opacity: 0.5; }
+        50% { fill: #60a5fa; opacity: 1; filter: drop-shadow(0 0 3px #60a5fa); }
+      }
+      .pulse-blue { animation: pulseBlue 1.6s ease-in-out infinite; }
+    </style>
+
+    <!-- Gradients &amp; Filters -->
+    <clipPath id="clip-path-cmd1">
+      <rect class="clip-cmd1" x="20" y="8" width="0" height="25" />
+    </clipPath>
+    <clipPath id="clip-path-cmd2">
+      <rect class="clip-cmd2" x="20" y="112" width="0" height="25" />
+    </clipPath>
+
+    <radialGradient id="amber-glow-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.16" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="indigo-glow-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Shadow filters -->
+    <filter id="drop-shadow-window" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="15" flood-color="#000000" flood-opacity="0.55" />
+    </filter>
+    
+    <filter id="drop-shadow-hud" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="20" flood-color="#f59e0b" flood-opacity="0.22" />
+    </filter>
+
+    <filter id="led-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect class="bg" width="940" height="560" rx="20" ry="20" />
+
+  <!-- Ambient Light Orbs -->
+  <circle class="glow-amber" cx="720" cy="220" r="320" />
+  <circle class="glow-indigo" cx="220" cy="360" r="300" />
+
+  <!-- ════════════ LAYER 2: Dev Terminal Window (Floating Backdrop) ════════════ -->
+  <g transform="translate(0, 0)">
+    <rect class="glass-terminal" x="40" y="50" width="480" height="440" rx="12" ry="12" />
+    
+    <!-- Titlebar -->
+    <path class="titlebar-bg" d="M41,51.5 h478 a10.5,10.5 0 0 1 10.5,10.5 v20 h-499 v-20 a10.5,10.5 0 0 1 10.5,-10.5 z" />
+    <circle class="dot-red" cx="64" cy="67" r="5"/>
+    <circle class="dot-yellow" cx="80" cy="67" r="5"/>
+    <circle class="dot-green" cx="96" cy="67" r="5"/>
+    <text class="font-sans window-title" x="114" y="71">developer-console — npm install form-ready</text>
+    <line x1="40" y1="82" x2="520" y2="82" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1.5" />
+
+    <!-- Terminal Content Stream -->
+    <g transform="translate(40, 95)">
+      <!-- Command 1: Typing -->
+      <text class="font-mono prompt" x="20" y="26">❯</text>
+      <text class="font-mono cmd-text" x="40" y="26" clip-path="url(#clip-path-cmd1)">npm i form-ready zod</text>
+      <rect class="cursor cursor-1" x="40" y="12" width="8" height="16" rx="1"/>
+
+      <!-- Spinner container -->
+      <g class="spinner-container">
+        <path class="spin-icon" d="M26,50 A6,6 0 1,1 20,56" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+        <text class="font-mono ansi-cyan" x="38" y="60">resolving dynamic schemas...</text>
+      </g>
+
+      <!-- Success installation logs -->
+      <g class="log-success">
+        <text class="font-mono ansi-green-bold" x="20" y="60">✔ Installed form-ready@1.0.3</text>
+        <text class="font-mono ansi-gray" x="20" y="80">  ├─ Zod validator engine integrated (0 dependencies)</text>
+        <text class="font-mono ansi-gray" x="20" y="98">  └─ Hook state initialization complete</text>
+      </g>
+
+      <!-- Command 2: npm run dev -->
+      <g class="prompt-2">
+        <text class="font-mono prompt" x="20" y="128">❯</text>
+        <text class="font-mono cmd-text" x="40" y="128" clip-path="url(#clip-path-cmd2)">npm run dev</text>
+        <rect class="cursor cursor-2" x="40" y="114" width="8" height="16" rx="1"/>
+      </g>
+
+      <!-- Dev server outputs -->
+      <g class="log-metro">
+        <text class="font-mono ansi-cyan" x="20" y="158">Starting Vite dev server...</text>
+      </g>
+
+      <g class="log-registered">
+        <text class="font-mono ansi-green" x="20" y="178">✔ Vite server active at http://localhost:5173</text>
+      </g>
+
+      <g class="log-active">
+        <text class="font-mono ansi-white-bold" x="20" y="210">[form-ready] 🟢 Hook validator registered</text>
+      </g>
+
+      <!-- Event 1: Validation Error log -->
+      <g class="log-will-show">
+        <text class="font-mono ansi-blue" x="20" y="242">[form-ready] ⚡ Event: onChange | Field: email | Val: "john@"</text>
+        <text class="font-mono ansi-dim" x="20" y="262">└─ error: <tspan class="ansi-cyan">"Invalid email address" (Zod Schema)</tspan></text>
+      </g>
+
+      <!-- Event 2: Validation Success log -->
+      <g class="log-will-success">
+        <text class="font-mono ansi-blue" x="20" y="298">[form-ready] ⚡ Event: onChange | Field: email | Val: "john@doe.com"</text>
+        <text class="font-mono ansi-dim" x="20" y="318">└─ state: <tspan class="ansi-cyan">{ isValid: true, errors: null }</tspan></text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ════════════ LAYER 3: Mac Web Browser Mockup (Middle Layer) ════════════ -->
+  <g transform="translate(0, 0)">
+    <!-- Browser chassis and frame -->
+    <rect x="540" y="60" width="360" height="430" rx="16" ry="16" fill="#18181b" stroke="#3f3f46" stroke-width="3" filter="url(#drop-shadow-window)" />
+    
+    <!-- Browser Screen View area -->
+    <g>
+      <!-- Background of browser window content -->
+      <rect x="546" y="104" width="348" height="380" rx="4" ry="4" fill="#09090b" />
+
+      <!-- Browser Header Bar controls -->
+      <rect x="546" y="66" width="348" height="38" rx="10" ry="10" fill="#18181b" />
+      <rect x="546" y="86" width="348" height="18" fill="#18181b" />
+      <circle cx="566" cy="85" r="4.5" fill="#ef4444" />
+      <circle cx="578" cy="85" r="4.5" fill="#f59e0b" />
+      <circle cx="590" cy="85" r="4.5" fill="#10b981" />
+      
+      <!-- Back Forward browser buttons -->
+      <path d="M612,85 L617,80 M612,85 L617,90" stroke="#52525b" stroke-width="1.5" />
+      <path d="M628,85 L623,80 M628,85 L623,90" stroke="#52525b" stroke-width="1.5" />
+      
+      <!-- URL Bar -->
+      <rect x="644" y="73" width="220" height="24" rx="6" fill="#09090b" stroke="#27272a" stroke-width="1.5" />
+      <text class="font-sans" x="754" y="89" fill="#71717a" font-size="10px" font-weight="600" text-anchor="middle">localhost:5173</text>
+      
+      <line x1="546" y1="104" x2="894" y2="104" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" />
+
+      <!-- Inner Registration Card Form -->
+      <rect x="562" y="120" width="316" height="316" rx="12" fill="rgba(15, 23, 42, 0.4)" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1.5" />
+      
+      <text class="font-sans" x="580" y="152" fill="#f4f4f5" font-size="13px" font-weight="700">Create Account</text>
+      <text class="font-sans" x="580" y="166" fill="#52525b" font-size="8px" font-weight="700" letter-spacing="1">SCHEMA VALIDATION BY ZOD</text>
+
+      <!-- Input Field 1: Name -->
+      <text class="font-sans" x="580" y="196" fill="#71717a" font-size="9px" font-weight="700">FULL NAME</text>
+      <rect x="580" y="202" width="280" height="32" rx="6" fill="#09090b" stroke="#27272a" stroke-width="1.5" />
+      
+      <text class="font-sans name-placeholder" x="592" y="222" fill="#3f3f46" font-size="10px">Your full name</text>
+      <text class="font-sans name-typed-text" x="592" y="222" fill="#e4e4e7" font-size="10px">Alex</text>
+
+      <!-- Pulse Ring 1 -->
+      <circle class="pulse-ring-1" cx="640" cy="218" r="8" fill="none" stroke="#f59e0b" stroke-width="2" />
+
+      <!-- Input Field 2: Email -->
+      <text class="font-sans" x="580" y="258" fill="#71717a" font-size="9px" font-weight="700">EMAIL ADDRESS</text>
+      <rect x="580" y="264" width="280" height="32" rx="6" fill="#09090b" stroke="#27272a" stroke-width="1.5" />
+
+      <text class="font-sans email-placeholder" x="592" y="284" fill="#3f3f46" font-size="10px">you@domain.com</text>
+      <text class="font-sans email-phase1-text" x="592" y="284" fill="#e4e4e7" font-size="10px">john@</text>
+      <text class="font-sans email-phase2-text" x="592" y="284" fill="#e4e4e7" font-size="10px">john@doe.com</text>
+
+      <!-- Pulse Ring 2 -->
+      <circle class="pulse-ring-2" cx="640" cy="280" r="8" fill="none" stroke="#f59e0b" stroke-width="2" />
+
+      <!-- Error Bubble underneath -->
+      <g class="error-bubble">
+        <rect x="580" y="304" width="280" height="24" rx="4" fill="#fef2f2" stroke="#fee2e2" stroke-width="1" />
+        <circle cx="592" cy="316" r="3" fill="#ef4444" />
+        <text class="font-sans" x="602" y="319" fill="#ef4444" font-size="9px" font-weight="600">Invalid email address (zod schema error)</text>
+      </g>
+
+      <!-- Submit button toggles -->
+      <!-- Disabled state -->
+      <g class="btn-submit-disabled">
+        <rect x="580" y="374" width="280" height="34" rx="6" fill="#27272a" />
+        <text class="font-sans" x="720" y="395" fill="#52525b" font-size="10px" font-weight="700" text-anchor="middle">SUBMIT REGISTRATION</text>
+      </g>
+      <!-- Enabled state -->
+      <g class="btn-submit-enabled">
+        <rect x="580" y="374" width="280" height="34" rx="6" fill="#f59e0b" stroke="#fbbf24" stroke-width="1" />
+        <text class="font-sans" x="720" y="395" fill="#09090b" font-size="10px" font-weight="700" text-anchor="middle">SUBMIT REGISTRATION</text>
+        
+        <!-- Pulse Ring 3 -->
+        <circle class="pulse-ring-3" cx="720" cy="391" r="8" fill="none" stroke="#ffffff" stroke-width="2" />
+      </g>
+
+      <!-- Success Toast Alert Banner -->
+      <g class="success-toast" transform="translate(0, 0)">
+        <rect x="620" y="125" width="200" height="36" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.5" filter="url(#drop-shadow-window)" />
+        <text class="font-sans" x="720" y="147" fill="#34d399" font-size="10px" font-weight="700" text-anchor="middle">✔ Registration Completed!</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ════════════ LAYER 4: State Inspector HUD Panel (Floating Top Layer Overlay) ════════════ -->
+  <!-- Anchored in the center to overlay both terminal and browser windows, creating massive 3D depth -->
+  <g transform="translate(0, 0)" filter="url(#drop-shadow-hud)">
+    <rect class="glass-hud" x="380" y="240" width="240" height="144" rx="10" ry="10" />
+    
+    <!-- HUD Header -->
+    <rect x="381" y="241" width="238" height="30" rx="8" fill="#2b1a03" />
+    <text class="font-sans" x="500" y="260" fill="#fde68a" font-size="11px" font-weight="700" text-anchor="middle" letter-spacing="1.2">FORM STATE INSPECTOR</text>
+    <line x1="380" y1="271" x2="620" y2="271" stroke="rgba(245, 158, 11, 0.2)" stroke-width="1" />
+
+    <!-- Pulse Blue LED for active listener -->
+    <circle class="pulse-blue" cx="400" cy="292" r="4.5" />
+    <text class="font-sans" x="414" y="296" fill="#f59e0b" font-size="10px" font-weight="600">useForm() hook validator</text>
+
+    <!-- State A (Initial fields empty/validity false) -->
+    <g class="hud-phase-a">
+      <!-- Status LED (Dim gray) -->
+      <circle cx="400" cy="320" r="4.5" fill="#475569" stroke="#64748b" stroke-width="1" />
+      <text class="font-mono" x="414" y="324" fill="#a1a1aa" font-size="10px">isValid: <tspan fill="#f87171" font-weight="700">false</tspan></text>
+      <text class="font-mono" x="400" y="352" fill="#a1a1aa" font-size="10px">errors:  <tspan fill="#71717a" font-weight="700">null</tspan></text>
+    </g>
+
+    <!-- State B (Email Invalid Zod triggered) -->
+    <g class="hud-phase-b">
+      <!-- Status LED (Red active) -->
+      <circle cx="400" cy="320" r="4.5" fill="#ef4444" opacity="0.8" />
+      <text class="font-mono" x="414" y="324" fill="#a1a1aa" font-size="10px">isValid: <tspan fill="#f87171" font-weight="700">false</tspan></text>
+      <text class="font-mono" x="400" y="352" fill="#a1a1aa" font-size="10px">errors:  <tspan fill="#ef4444" font-weight="700">{ email: "..." }</tspan></text>
+    </g>
+
+    <!-- State C (Form Valid submit ready) -->
+    <g class="hud-phase-c">
+      <!-- Status LED (Green glowing) -->
+      <circle cx="400" cy="320" r="5" fill="#10b981" filter="url(#led-glow)" />
+      <text class="font-mono" x="414" y="324" fill="#a1a1aa" font-size="10px">isValid: <tspan fill="#34d399" font-weight="700">true</tspan></text>
+      <text class="font-mono" x="400" y="352" fill="#a1a1aa" font-size="10px">errors:  <tspan fill="#34d399" font-weight="700">null</tspan></text>
+    </g>
+  </g>
+
+  <!-- Bottom Workspace Brand Label -->
+  <text class="font-sans" x="470" y="534" fill="#3f3f46" font-size="11px" font-weight="600" text-anchor="middle" letter-spacing="0.5">UNIVERSAL SCHEMA VALIDATOR AND BROWSER MOCKUP STATE ENGINE</text>
+
+</svg>

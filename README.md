@@ -2,6 +2,11 @@
 
 Universal form validation and handling for React, Next.js, Vite, and vanilla JavaScript.
 
+<p align="center">
+  <img src="./assets/cli_demo.svg" alt="Form Ready CLI &amp; Web Browser Demo" width="100%" style="max-width: 940px;" />
+</p>
+
+
 ## Installation
 
 ```bash
